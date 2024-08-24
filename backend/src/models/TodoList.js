@@ -14,3 +14,8 @@ todoLists.set('0000000002', {
 export const getAllTodoLists = () => {
   return Object.fromEntries(todoLists.entries())
 }
+
+export const updateTodoList = (id, todos) => {
+  todoLists.set(id, { ...todoLists.get(id), todos })
+  return todoLists.get(id)
+}

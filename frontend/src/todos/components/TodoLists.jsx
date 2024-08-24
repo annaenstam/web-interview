@@ -17,6 +17,16 @@ const fetchTodoLists = async () => {
   return await fetch(`${apiBaseUrl}/todo-lists`).then((response) => response.json())
 }
 
+const updateTodoList = async (id, todos) => {
+  await fetch(`${apiBaseUrl}/todo-lists/${id}`, {
+    method: 'PATCH',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(todos),
+  }).then((response) => response.json())
+}
+
 export const TodoLists = ({ style }) => {
   const [todoLists, setTodoLists] = useState({})
   const [activeList, setActiveList] = useState()
@@ -53,6 +63,7 @@ export const TodoLists = ({ style }) => {
               ...todoLists,
               [id]: { ...listToUpdate, todos },
             })
+            updateTodoList(id, todos)
           }}
         />
       )}

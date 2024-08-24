@@ -31,4 +31,31 @@ describe('TodoList Controller Tests', () => {
     expect(response.status).to.equal(200)
     expect(JSON.stringify(response.body)).to.equal(JSON.stringify(expectedResponseBody))
   })
+
+  it('given valid numeric todo list id, should respond with 200', async () => {
+    // arrange
+    const validTodoListId = '0000000001'
+
+    // act
+    const response = await request(app)
+      .patch(`/api/todo-lists/${validTodoListId}`)
+      .send(JSON.stringify([{ description: 'First todo of second list!', completed: false }]))
+
+    // assert
+    expect(response.status).to.equal(200)
+  })
+
+  it('given non numeric todo list id, should respond with 400', async () => {
+    // arrange
+    const nonValidTodoListId = 'nonValidId'
+
+    // act
+    const response = await request(app)
+      .patch(`/api/todo-lists/${nonValidTodoListId}`)
+      .send(JSON.stringify([{ description: 'First todo of second list!', completed: false }]))
+
+    // assert
+    expect(response.status).to.equal(400)
+    expect(response.body.message).to.equal('Bad Request. Invalid format of todo list id')
+  })
 })
