@@ -27,6 +27,8 @@ const updateTodoList = async (id, todos) => {
   }).then((response) => response.json())
 }
 
+const allTodosCompleted = (todoList) => todoList.todos.every((todo) => todo.completed)
+
 export const TodoLists = ({ style }) => {
   const [todoLists, setTodoLists] = useState({})
   const [activeList, setActiveList] = useState()
@@ -47,7 +49,10 @@ export const TodoLists = ({ style }) => {
                 <ListItemIcon>
                   <ReceiptIcon />
                 </ListItemIcon>
-                <ListItemText primary={todoLists[key].title} />
+                <ListItemText
+                  primary={todoLists[key].title}
+                  secondary={allTodosCompleted(todoLists[key]) ? '✅ All todos finished!' : ''}
+                />
               </ListItemButton>
             ))}
           </List>
