@@ -29,6 +29,20 @@ const updateTodoList = async (id, todos) => {
 
 const allTodosCompleted = (todoList) => todoList.todos.every((todo) => todo.completed)
 
+const getCompletedTodoListText = () => {
+  const kudos = [
+    'You did it! 🏆',
+    'Keep up the good work! 👏🏼',
+    'Cheers to you! 🌟',
+    'Great job! 👍🏼',
+  ]
+  const getRandomKudos = (max, min) => {
+    const randomNumber = Math.floor(Math.random() * (max - min) + min)
+    return kudos[randomNumber]
+  }
+  return `✅ All todos finished! ${getRandomKudos(kudos.length - 1, 0)}`
+}
+
 export const TodoLists = ({ style }) => {
   const [todoLists, setTodoLists] = useState({})
   const [activeList, setActiveList] = useState()
@@ -51,7 +65,7 @@ export const TodoLists = ({ style }) => {
                 </ListItemIcon>
                 <ListItemText
                   primary={todoLists[key].title}
-                  secondary={allTodosCompleted(todoLists[key]) ? '✅ All todos finished!' : ''}
+                  secondary={allTodosCompleted(todoLists[key]) ? getCompletedTodoListText() : ''}
                 />
               </ListItemButton>
             ))}
